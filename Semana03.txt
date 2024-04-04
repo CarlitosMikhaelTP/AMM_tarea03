@@ -1,0 +1,131 @@
+// ACTIVIDAD 1
+// Clase Usuario
+class Usuario {
+  String nombre;
+  String email;
+  String contrasena;
+
+  Usuario(this.nombre, this.email, this.contrasena);
+}
+
+// Mixin Autenticacion
+mixin Autenticacion {
+  void iniciarSesion() {
+    print('Sesión iniciada correctamente');
+  }
+}
+
+// Clase UsuarioAutenticado que hereda de Usuario y utiliza el mixin Autenticacion
+class UsuarioAutenticado extends Usuario with Autenticacion {
+  UsuarioAutenticado(String nombre, String email, String contrasena)
+      : super(nombre, email, contrasena);
+}
+
+
+void main() {
+  UsuarioAutenticado usuario =
+      UsuarioAutenticado('Carlitos', 'Carlitos@gmail.com', '123');
+  usuario.iniciarSesion(); // Invocando el método iniciarSesion()
+}
+
+// ACTIVIDAD 02
+import 'dart:math';
+// Clase Calculadora
+class Calculadora {
+  double suma(double a, double b) {
+    return a + b;
+  }
+
+  double resta(double a, double b) {
+    return a - b;
+  }
+
+  double multiplicacion(double a, double b) {
+    return a * b;
+  }
+
+  double division(double a, double b) {
+    if (b == 0) {
+      throw Exception('No se puede dividir por cero');
+    }
+    return a / b;
+  }
+}
+
+// Mixin OperacionesAdicionales
+mixin OperacionesAdicionales {
+  double potencia(double a, double b) {
+    return pow(a, b).toDouble();
+  }
+}
+
+// Mixin OperacionesAvanzadas
+mixin OperacionesAvanzadas {
+  double raizCuadrada(double a) {
+    if (a < 0) {
+      throw Exception('No se puede calcular la raíz cuadrada de un número negativo');
+    }
+    return sqrt(a);
+  }
+}
+
+// Clase CalculadoraAvanzada que extiende de Calculadora y utiliza los mixins
+class CalculadoraAvanzada extends Calculadora
+    with OperacionesAdicionales, OperacionesAvanzadas {}
+
+// Programa principal
+void main() {
+  CalculadoraAvanzada calculadora = CalculadoraAvanzada();
+
+  double resultado = calculadora.suma(2, 3); // Resultado: 5.0
+  print('Suma: $resultado');
+
+  resultado = calculadora.resta(5, 2); // Resultado: 3.0
+  print('Resta: $resultado');
+
+  resultado = calculadora.multiplicacion(4, 6); // Resultado: 24.0
+ 
+// ACTIVIDAD 03
+// Clase Empleado
+class Empleado {
+  String nombre;
+  String apellido;
+  double salario;
+  int horasTrabajadas;
+
+  Empleado(this.nombre, this.apellido, this.salario, this.horasTrabajadas);
+}
+
+// Mixin Bonificaciones
+mixin Bonificaciones {
+  double calcularBonificacion(double salario) {
+    if (salario < 2000) {
+      return salario * 0.1; // Bonificación del 10%
+    } else if (salario < 5000) {
+      return salario * 0.15; // Bonificación del 15%
+    } else {
+      return salario * 0.2; // Bonificación del 20%
+    }
+  }
+}
+
+// Clase EmpleadoConBonificaciones
+class EmpleadoConBonificaciones extends Empleado with Bonificaciones {
+  EmpleadoConBonificaciones(
+      String nombre, String apellido, double salario, int horasTrabajadas)
+      : super(nombre, apellido, salario, horasTrabajadas);
+}
+
+// Programa principal
+void main() {
+  List<EmpleadoConBonificaciones> empleados = [
+    EmpleadoConBonificaciones('Carlitos', 'Torres', 1500, 160),
+    EmpleadoConBonificaciones('Mikhael', 'Pérez', 3000, 180),
+    EmpleadoConBonificaciones('Carlos', 'Torres', 6000, 200),
+  ];
+
+  for (EmpleadoConBonificaciones empleado in empleados) {
+    double bonificacion = empleado.calcularBonificacion(empleado.salario);
+    print('${empleado.nombre} ${empleado.apellido} - Bonificación: $bonificacion');
+  }
+}
